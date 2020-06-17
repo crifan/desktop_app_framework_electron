@@ -1,6 +1,6 @@
-# Electron支持Python的心得
+# electron-python-example
 
-此处整理Electron支持Python期间的心得：
+在参考`electron-python-example`给Electron添加Python支持期间，遇到很多问题。整理如下：
 
 ## npm install时zeromq会报错
 
@@ -82,27 +82,6 @@ const createWindow = () => {
 详见：
 
 【已解决】electron-python-example运行出错：Uncaught ReferenceError process is not defined
-
-## Uncaught Error: The module node_modules/zeromq/build/Release/zmq.node was compiled against a different Node.js version using NODE_MODULE_VERSION 57. This version of Node.js requires NODE_MODULE_VERSION 75
-
-**解决办法**：把之前`13.5.0`版本的node，换成`8.x版本`（比如`8.17.0`）的`node`后，再重新编译electron
-
-```bash
-npm install --save-dev electron-rebuild
-./node_modules/.bin/electron-rebuild
-```
-
-注：
-
-编译之前，需要安装`cmake`
-
-```bash
-brew install cmake
-```
-
-详见：
-
-【已解决】Electron报错：Uncaught Error The module zeromq zmq.node was compiled against a different Node.js version
 
 ## renderer.js Error Lost remote after 10000ms
 
@@ -204,3 +183,86 @@ source venv/bin/activate
 ```
 
 即可找到zerorpc，正常启动python进程了。
+
+
+## Uncaught Error The module zeromq zmq.node was compiled against a different Node.js version
+
+* **问题**：Electron运行
+```bash
+./node_modules/.bin/electron .
+```
+报错：
+```bash
+Uncaught Error: The module node_modules/zeromq/build/Release/zmq.node
+was compiled against a different Node.js version using
+NODE_MODULE_VERSION 57. This version of Node.js requires
+NODE_MODULE_VERSION 75. Please try re-compiling or re-installing
+the module (for instance, using `npm rebuild` or `npm install`).
+```
+* **原因**：此处安装的zeromq的库是针对于
+
+`NODE_MODULE_VERSION 57 =  Node.js Node.js 8.x`
+
+编译出来的，而当前用的node版本是：
+
+`NODE_MODULE_VERSION 75 = Node.js Node.js 12.7.0`
+
+所以不匹配，没法使用。
+
+* **解决办法**：去重新编译出对应的匹配的`zeromq`库即可：
+
+* **注意事项和准备工作**：
+
+需要说明的是，此处当时node版本，已经是为了解决
+
+```bash
+npm install
+```
+
+期间 zerorpc出错，而去降低了node版本，从之前的 `node: 13.5.0`降低到了：`node：8.17.0`
+
+且对于node和electron本身，不同版本之间是有依赖关系的，所以此处`node 8.17.0`，只能用`electron 2.0.18`
+
+所以此处配置是：
+
+文件：`electron_python/electron-python-example/package.json`
+
+```json
+  "devDependencies": {
+    "electron": "^2.0.18",
+```
+
+文件：`electron_python/electron-python-example/.npmrc`
+
+```json
+npm_config_target="2.0.18" # electron version
+```
+
+* **解决步骤**
+
+安装electron-rebuild：
+
+```bash
+npm install --save-dev electron-rebuild
+```
+
+重新去rebuild：
+
+```bash
+./node_modules/.bin/electron-rebuild
+```
+
+即可。
+
+
+注：
+
+编译之前，需要安装`cmake`
+
+```bash
+brew install cmake
+```
+
+详见：
+
+【已解决】Electron报错：Uncaught Error The module zeromq zmq.node was compiled against a different Node.js version

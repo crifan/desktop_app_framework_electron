@@ -4,6 +4,26 @@
 * 【已解决】electron-python中去打包Electron成独立的可执行程序
 * 【已解决】electron打包npm run dist报错：signing Error Command failed codesign sign
 * 【已解决】electron-builder打包报错：make-dir.js 86 catch SyntaxError Unexpected token {
+* 【已解决】给Electron-Python打包出win的exe
+* 【已解决】windows中用PyInstaller打包mitmdump的Python脚本为exe
+* 【已解决】Windows10中重建NodeJS开发环境以运行和打包Electron-Python的项目为exe
+* 【已解决】Windows中如何获取到Electron-builder打包后exe双击运行时的目录
+* 【已解决】Electron的打包工具选择：electron-packager vs electron-builder vs electron-rebuild
+* 【未解决】electron-builder打包Mac期间报错：skipped macOS application code signing reason cannot find valid Developer ID Application identity
+* 【已解决】windows中electron-builder打包出免安装的可移动的单个exe
+* 【已解决】js中用正则处理替换Electron打包后app的路径
+* 【已解决】mac中用Image2icon制作要打包的app的图标
+* 【无需解决】Mac中electron-rebuild失败：zeromq vendor napi.h error unknown type name napi_callback_scope
+* 【已解决】Electron报错：Uncaught Error The module zeromq zmq.node was compiled against a different Node.js version
+* 【未解决】electron-python-example运行后输入计算内容但是不显示结果
+* 【已解决】mac中重新安装以降低node和npm版本
+* 【已解决】electron和node版本对应关系
+* 【未解决】Mac中electron打包后process.env是undefined获取不到有效值
+* 【已解决】mac中npm安装electron速度太慢
+* 【已解决】electron中js启动python调用mitmdump报错：mitmdump No such script
+* 【已解决】electron-python中去打包Electron成独立的可执行程序
+* 【记录】把Electron打包的app放到别的mac中测试
+* 【已解决】打包后Electron路径中包含中文会无法启动mitmdump代理
 * 
 * [开发环境 | Electron](https://www.electronjs.org/docs/tutorial/development-environment)
 * [小公司小项目开发跨平台的桌面应用用什么编程语言比较好？ - 知乎](https://www.zhihu.com/question/20586845/answer/1249176614)
