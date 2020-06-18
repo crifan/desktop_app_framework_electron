@@ -1,10 +1,5 @@
 # Electron对python支持
 
-> #### info:: 更多细节
-> 详见：
-> 
-> 【已解决】Mac中运行跑通electron-python-example的示例
-
 Electron本身官网并没有支持Python。
 
 不过网上有人给出了可行的方案：
@@ -99,31 +94,27 @@ npm_config_disturl="https://atom.io/download/electron" # 资源下载地址
 npm_config_build_from_source="true" # 从源码编译
 ```
 
-更新配置`package.json`为：
+以及配置文件：`electron-python-example/package.json`
 
 ```json
 {
-  "name": "MitmdumpUrlSaver",
+  "name": "pretty-calculator",
   "version": "1.0.0",
-  "description": "Use mitmdump proxy to save out url",
+  "description": "A minimal Electron and Python - based calculator ",
   "main": "main.js",
   "scripts": {
-    "start": "electron .",
-    "pack": "electron-builder --dir",
-    "dist": "electron-builder",
-    "dist_all": "electron-builder -mw"
+    "start": "electron ."
   },
   "repository": "https://github.com/fyears/electron-python-example",
   "keywords": [
     "Electron",
     "Python",
     "zerorpc",
-    "mitmdump"
+    "demo"
   ],
-  "author": "Crifan Li",
+  "author": "fyears",
   "license": "MIT",
   "dependencies": {
-    "electron-context-menu": "^0.15.2",
     "zeromq": "^6.0.0-beta.6",
     "zerorpc": "^0.9.8"
   },
@@ -131,50 +122,6 @@ npm_config_build_from_source="true" # 从源码编译
     "electron": "^2.0.18",
     "electron-builder": "^21.2.0",
     "electron-rebuild": "^1.8.8"
-  },
-  "build": {
-    "productName": "mitmdumpUrlSaver",
-    "appId": "com.crifan.mitmdumpurlsaver",
-    "copyright": "Copyright © 2020 ${author} String",
-    "directories": {
-      "output": "builder_output"
-    },
-    "files": [
-      "**/*",
-      "!**/node_modules/*/{CHANGELOG.md,README.md,README,readme.md,readme}",
-      "!**/node_modules/*/{test,__tests__,tests,powered-test,example,examples}",
-      "!**/node_modules/*.d.ts",
-      "!**/node_modules/.bin",
-      "!**/*.{iml,o,hprof,orig,pyc,pyo,rbc,swp,csproj,sln,xproj}",
-      "!.editorconfig",
-      "!**/._*",
-      "!**/{.DS_Store,.git,.hg,.svn,CVS,RCS,SCCS,.gitignore,.gitattributes}",
-      "!**/{__pycache__,thumbs.db,.flowconfig,.idea,.vs,.nyc_output}",
-      "!**/{appveyor.yml,.travis.yml,circle.yml}",
-      "!**/{npm-debug.log,yarn.lock,.yarn-integrity,.yarn-metadata.json}",
-      "!build",
-      "!pymitmdump",
-      "!pycalc",
-      "!old-post-backup",
-      "!*.log",
-      "!*.txt",
-      "!*.md",
-      "!*.spec"
-    ],
-    "asar": false,
-    "mac": {
-      "category": "public.app-category.developer-tools",
-      "type": "distribution",
-      "icon": "assets/icon/icon.icns",
-      "target": [
-        "pkg",
-        "zip"
-      ]
-    },
-    "win": {
-      "target": "nsis",
-      "icon": "assets/icon/logo.png"
-    }
   }
 }
 ```
@@ -184,8 +131,6 @@ npm_config_build_from_source="true" # 从源码编译
 ```bash
 npm install
 ```
-
-
 
 ### 初始化Python开发环境
 
@@ -291,3 +236,203 @@ connecting to "tcp://localhost:4242"
 至此即在mac中跑通此处的`electron-python-example`了。
 
 剩下的就是自己实现自己需要的逻辑和功能了。
+
+## 打包和发布
+
+在实现了自己的业务逻辑和功能后，再去打包和发布。
+
+### python的打包
+
+先用`PyInstaller`打包：
+
+```bash
+cd electron-python-example
+
+rm -rf build
+rm -rf *.spec
+rm -rf pymitmdumpstartdist
+rm -rf pymitmdumpotherdist
+
+pyinstaller pymitmdump/mitmdumpStartApi.py --distpath pymitmdumpstartdist --add-data "pymitmdump/mitmdump_executable:mitmdump_executable" --add-data "pymitmdump/mitmdumpUrlSaver.py:."
+
+pyinstaller pymitmdump/mitmdumpOtherApi.py --distpath pymitmdumpotherdist
+```
+
+此处会生成的2个dist目录：
+
+* `pymitmdumpstartdist`
+    * 二进制文件：`electron-python-example/pymitmdumpstartdist/mitmdumpStartApi/mitmdumpStartApi`
+    * 以及我们拷贝的：
+        * 整个目录：`electron-python-example/pymitmdumpstartdist/mitmdumpStartApi/mitmdump_executable`
+        * 单个py文件：`electron-python-example/pymitmdumpstartdist/mitmdumpStartApi/mitmdumpUrlSaver.py`
+* `pymitmdumpotherdist`
+    * 二进制文件：`electron-python-example/pymitmdumpotherdist/mitmdumpOtherApi/mitmdumpOtherApi`
+
+### electron的打包
+
+再去用`electron-builder`打包：
+
+```bash
+rm -rf builder_output
+
+npm run dist
+```
+
+生成：
+
+* **app**：`electron-python-example/builder_output/mac/mitmdumpUrlSaver.app`
+  * ![electron_python_app_mitmdumpurlsaver](../assets/img/electron_python_app_mitmdumpurlsaver.png)
+* **app的zip压缩包**：`electron-python-example/builder_output/mitmdumpUrlSaver-1.0.0-mac.zip`
+* **pkg**：`electron-python-example/builder_output/mitmdumpUrlSaver-1.0.0.pkg`
+    * 注：Mac中安装后，但在应用程序中找不到对应的app。暂未深究，原因未知，肯能和code sign有关系。
+
+### 运行
+
+双击打包出来的app即可运行：
+
+![click_run_electron_python_app](../assets/img/click_run_electron_python_app.png)
+
+### 其他说明
+
+### `package.json`最新完整配置及说明
+
+此处最后的`package.json`配置为：
+
+```json
+{
+  "name": "MitmdumpUrlSaver",
+  "version": "1.0.0",
+  "description": "Use mitmdump proxy to save out url",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder",
+    "dist_all": "electron-builder -mw"
+  },
+  "repository": "https://github.com/fyears/electron-python-example",
+  "keywords": [
+    "Electron",
+    "Python",
+    "zerorpc",
+    "mitmdump"
+  ],
+  "author": "Crifan Li",
+  "license": "MIT",
+  "dependencies": {
+    "electron-context-menu": "^0.15.2",
+    "zeromq": "^6.0.0-beta.6",
+    "zerorpc": "^0.9.8"
+  },
+  "devDependencies": {
+    "electron": "^2.0.18",
+    "electron-builder": "^21.2.0",
+    "electron-rebuild": "^1.8.8"
+  },
+  "build": {
+    "productName": "mitmdumpUrlSaver",
+    "appId": "com.crifan.mitmdumpurlsaver",
+    "copyright": "Copyright © 2020 ${author} String",
+    "directories": {
+      "output": "builder_output"
+    },
+    "files": [
+      "**/*",
+      "!**/node_modules/*/{CHANGELOG.md,README.md,README,readme.md,readme}",
+      "!**/node_modules/*/{test,__tests__,tests,powered-test,example,examples}",
+      "!**/node_modules/*.d.ts",
+      "!**/node_modules/.bin",
+      "!**/*.{iml,o,hprof,orig,pyc,pyo,rbc,swp,csproj,sln,xproj}",
+      "!.editorconfig",
+      "!**/._*",
+      "!**/{.DS_Store,.git,.hg,.svn,CVS,RCS,SCCS,.gitignore,.gitattributes}",
+      "!**/{__pycache__,thumbs.db,.flowconfig,.idea,.vs,.nyc_output}",
+      "!**/{appveyor.yml,.travis.yml,circle.yml}",
+      "!**/{npm-debug.log,yarn.lock,.yarn-integrity,.yarn-metadata.json}",
+      "!build",
+      "!pymitmdump",
+      "!pycalc",
+      "!old-post-backup",
+      "!*.log",
+      "!*.txt",
+      "!*.md",
+      "!*.spec"
+    ],
+    "asar": false,
+    "mac": {
+      "category": "public.app-category.developer-tools",
+      "type": "distribution",
+      "icon": "assets/icon/icon.icns",
+      "target": [
+        "pkg",
+        "zip"
+      ]
+    },
+    "win": {
+      "target": "nsis",
+      "icon": "assets/icon/logo.png"
+    }
+  }
+}
+```
+
+
+(1) `file`
+
+其中
+
+```json
+"**/*",
+"!**/node_modules/*/{CHANGELOG.md,README.md,README,readme.md,readme}",
+"!**/node_modules/*/{test,__tests__,tests,powered-test,example,examples}",
+"!**/node_modules/*.d.ts",
+"!**/node_modules/.bin",
+"!**/*.{iml,o,hprof,orig,pyc,pyo,rbc,swp,csproj,sln,xproj}",
+"!.editorconfig",
+"!**/._*",
+"!**/{.DS_Store,.git,.hg,.svn,CVS,RCS,SCCS,.gitignore,.gitattributes}",
+"!**/{__pycache__,thumbs.db,.flowconfig,.idea,.vs,.nyc_output}",
+"!**/{appveyor.yml,.travis.yml,circle.yml}",
+"!**/{npm-debug.log,yarn.lock,.yarn-integrity,.yarn-metadata.json}",
+```
+
+是从官网 [Application Contents - electron-builder](https://www.electron.build/configuration/contents#files) 拷贝出来的默认的配置；
+
+余下部分：
+
+```json
+      "!build",
+      "!pymitmdump",
+      "!pycalc",
+      "!old-post-backup",
+      "!*.log",
+      "!*.txt",
+      "!*.md",
+      "!*.spec"
+```
+
+是自己加的，用于排除此处不需要打包的文件。
+
+(2) `asar`
+
+`asar`参数默认是开启的，其会导致此处二进制可执行文件：
+
+* mitmdumpUrlSaver.app/Contents/Resources/app/pymitmdumpstartdist/mitmdumpStartApi/mitmdumpStartApi
+    * 无法运行
+* mitmdumpUrlSaver.app/Contents/Resources/app/pymitmdumpotherdist/mitmdumpOtherApi/mitmdumpOtherApi
+    * 可以运行
+
+根本原因：未知
+
+规避办法：只能去关闭掉asar：
+
+```json
+"asar": false,
+```
+
+才能正常运行mitmdumpStartApi和mitmdumpOtherApi
+
+> #### info:: 更多细节
+> 详见：
+> 
+> 【已解决】Mac中运行跑通electron-python-example的示例

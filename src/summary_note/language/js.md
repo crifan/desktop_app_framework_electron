@@ -2,7 +2,7 @@
 
 ## Electron集成js框架
 
-想要把主流的js框架集成到Electron中，有如下选择：
+想要把主流的`js`框架集成到Electron中，有如下选择：
 
 * react
     * [electron-react-boilerplate/electron-react-boilerplate: A Foundation for Scalable Cross-Platform Apps](https://github.com/electron-react-boilerplate/electron-react-boilerplate)

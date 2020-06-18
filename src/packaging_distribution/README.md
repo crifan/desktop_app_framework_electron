@@ -41,24 +41,6 @@
 npm install -D electron-builder@21.2.0
 ```
 
-> #### warning:: 最新版electron-builder有bug
-> 截至 20200529，通过
-> 
-> `npm install -D electron-builder`
-> 
-> 安装出的`electron-builder`是最新版的`22.6.1`
-> 
-> 在后续`npm run dist`打包会报错：`mkdirs/make-dir.js:86 } catch { SyntaxError: Unexpected token {`
-> 
-> 所以暂时换用之前某个版本：`21.2.0`
-
-另外把`electron`的版本换成最新的
-
-```bash
-npm uninstall electron
-npm i -D electron@latest
-```
-
 ### 添加build配置
 
 以及给`package.json`加上必要的`build`的配置，主要增加的部分是：
@@ -146,21 +128,6 @@ npm i -D electron@latest
 ```bash
 npm run dist
 ```
-
-> #### warning:: 如果出现签名错误则可以加变量忽略
-> 如果打包出现错误：
-> 
-> `signing ... Error: Command failed: codesign ... code object is not signed at all In subcomponent`
-> 
-> 那么可以用
-> 
-> `export CSC_IDENTITY_AUTO_DISCOVERY=false`
-> 
-> 再去：
-> 
-> `npm run dist`
-> 
-> 即可正常打包
 
 打包后输出文件：
 

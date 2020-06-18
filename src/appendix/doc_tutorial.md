@@ -16,3 +16,19 @@ Electron官网有非常详尽的教程，需要查找某些技术细节时，推
     * ![electrion_api_demos](../assets/img/electrion_api_demos.jpg)
 * 快速上手模板
   * [electron/electron-quick-start: Clone to try a simple Electron app](https://github.com/electron/electron-quick-start)
+
+## Python打包
+
+### PyInstaller
+
+如果涉及到Electron支持Python，则Electron打包期间也会涉及到Python的打包。
+
+最常用的Python打包工具是：`PyInstaller`
+
+其打包常用参数可以参考：
+
+[What to bundle, where to search](https://pyinstaller.readthedocs.io/en/stable/usage.html#how-to-generate)
+
+和运行时的路径有关的资料：
+
+[Run-time Information — PyInstaller 3.6 documentation](https://pyinstaller.readthedocs.io/en/stable/runtime-information.html)

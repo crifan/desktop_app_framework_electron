@@ -34,3 +34,45 @@ electron/resources/
 更多细节详见：
 
 [应用程序打包 | Electron](https://electronjs.org/docs/tutorial/application-packaging)
+
+## asar使用心得
+
+### 开启asar但不压缩部分文件和目录
+
+有些时候需要实现，虽然整体开启asar，但是不想asar压缩部分内容，则可以用：`asarUnpack`
+
+举例：
+
+```json
+    "asar": true,
+    "asarUnpack": [
+      "main.js",
+      "pymitmdumpstartdist",
+      "pymitmdumpotherdist"
+    ],
+```
+
+确保预期效果：打包后的mac的app中有了2个dist目录和一个文件：
+
+* `electron-python-example/builder_output/mac/mitmdumpUrlSaver.app/Contents/Resources/app.asar.unpacked/`
+  * `pymitmdumpstartdist`
+  * `pymitmdumpotherdist`
+  * `main.js`
+
+从而确保`main.js`运行期间去判断对应的PyInstaller打包后的python的二进制文件
+
+* `xxx/builder_output/mac/mitmdumpUrlSaver.app/Contents/Resources/app.asar/`
+  * `pymitmdumpstartdist/mitmdumpStartApi/mitmdumpStartApi`
+  * `pymitmdumpotherdist/mitmdumpOtherApi/mitmdumpOtherApi`
+
+都可以被
+
+```js
+isPackaged = require('fs').existsSync(fullPath)
+```
+
+识别到，确保后续代码逻辑可以正常运行。
+
+详见：
+
+【已解决】Mac中electron-python用electron-builder打包后app运行失败：Error Lost remote after 10000ms

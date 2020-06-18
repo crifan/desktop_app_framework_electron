@@ -1,7 +1,7 @@
 # 跨平台桌面应用框架：Electron
 
 * 最新版本：`v1.0`
-* 更新时间：`20200617`
+* 更新时间：`20200618`
 
 ## 鸣谢
 
@@ -9,7 +9,7 @@
 
 ## 简介
 
-介绍跨平台桌面应用框架Electron的基本概念、基本原理、核心优势以及额外特性；介绍了用Electron开发出的常见应用有哪些；解释了如何安装Electron；以及如何快速上手使用；以及如何打包和部署；专门整理了如何让Electron支持Python以及其后的相关心得；总结了相关的心得，比如打包方面的asar、如何制作app的logo、打包工具electron-builder、编译工具electron-rebuild等，以及常见的Windows和Mac系统中常见问题和解决方案、对于js框架的支持，最后附上相关文档和教程等资料。
+介绍跨平台桌面应用框架Electron的基本概念、基本原理、核心优势以及额外特性；介绍了用Electron开发出的常见应用有哪些；解释了如何安装Electron；以及如何快速上手使用；以及如何打包和部署；专门整理了如何让Electron支持Python以及其后的相关心得；总结了Electron的各种开发经验和心得，比如开发方面的Web技术、Log日志等；打包方面的如何制作app的logo、asar加密压缩、files参数、打包工具electron-builder、编译工具electron-rebuild等，以及常见的系统如Windows和Mac系统中常见问题和解决方案；以及不同语言，比如Python、js等的支持，整理了Node相关信息，最后附上相关文档和教程等资料。
 
 ## 源码+浏览+下载
 
