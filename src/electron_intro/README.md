@@ -5,8 +5,9 @@
         * 跨平台的桌面端应用开发
     * 谁开发的：`Github`
     * 旧称：`Atom Shell`
-      * 历史
-        * 2013年作为构建Github上可编程的文本编辑器Atom的框架而被开发出来，这两个项目在2014春季开源
+    * 历史
+      * 2013年作为构建Github上可编程的文本编辑器Atom的框架而被开发出来
+      * 2014春季这两个项目开源出来
     * 一句话描述：一个**用纯Web技术来构建跨平台桌面应用程序的开源框架**
       * Web技术：`HTML`、`CSS`和`JavaScript`
         * 对比：传统桌面应用都是非Web技术开发的
@@ -14,14 +15,21 @@
       * 桌面应用：主要用来开发桌面端应用
         * 而不是Web应用
     * 基本原理
-        * 将Chromium和Node.js合并到同一个运行时环境中
+        * 将`Chromium`和`Node.js`合并到同一个运行时环境中
           * 让你使用纯`JavaScript`调用丰富的原生(操作系统) APIs 
         * 并将其打包为`Mac`、`Windows`和`Linux`系统下的应用
-    * 可看成
+    * 架构
+      * 后端：**挣钱养家** 的 `Node.js`
+        * 负责：实现业务逻辑
+          * 注：`Node.js`是`Javascript`的一个`Web Server`
+      * 前端：**貌美如花** 的 `Chromium`
+        * 负责：显示内容
+          * 注：可以看成`Chromium`是`Chrome`的浏览器的内核实现
+    * 可把Electron看成
+        * 一个被 JavaScript 控制的，精简版的 Chromium 浏览器
         * 一个 Node. js 的变体
             * 专注于桌面应用而不是 Web Server 端
             * 使用 web 页面作为它的 GUI
-        * 一个被 JavaScript 控制的，精简版的 Chromium 浏览器
     * 主页
       * [Electron | 使用 JavaScript，HTML 和 CSS 构建跨平台的桌面应用程序](https://www.electronjs.org)
     * 竞品

@@ -99,11 +99,11 @@ const createWindow = () => {
 * 调试终端中：可以看到`main.js`的log
     * 因为是在VSCode的终端中运行的
 
-![electron_devtools_and_console_log](../../../assets/img/electron_devtools_and_console_log.png)
+![electron_devtools_and_console_log](../../assets/img/electron_devtools_and_console_log.png)
 
 而mac中打包后的Electron的app中，只能看到 Electron界面中（render.js打印）的log，看不到main.js中的log：
 
-![electron_app_no_main_js_log](../../../assets/img/electron_app_no_main_js_log.png)
+![electron_app_no_main_js_log](../../assets/img/electron_app_no_main_js_log.png)
 
 而此处希望，对于production生产模式，即mac中打包electron后得到的app文件 `mitmdumpUrlSaver.app`在其运行时也可以看到`main.js`中的log，以便于后续调试，当出错时找到原因。
 
@@ -111,17 +111,17 @@ const createWindow = () => {
 
 从界面中启动打包后的app内部的二进制文件，比如我的`mitmdumpUrlSaver.app`
 
-![electron_app_mitmdumpurlsaver](../../../assets/img/electron_app_mitmdumpurlsaver.png)
+![electron_app_mitmdumpurlsaver](../../assets/img/electron_app_mitmdumpurlsaver.png)
 
 对应内部的二进制文件
 
 `./mitmdumpUrlSaver.app/Contents/MacOS/mitmdumpUrlSaver`
 
-![electron_app_contents_bin](../../../assets/img/electron_app_contents_bin.png)
+![electron_app_contents_bin](../../assets/img/electron_app_contents_bin.png)
 
 即可启动终端，运行此处的APP。终端中可以看到我们要的`main.js`中的log
 
-![terminal_see_main_js_log](../../../assets/img/terminal_see_main_js_log.png)
+![terminal_see_main_js_log](../../assets/img/terminal_see_main_js_log.png)
 
 * **进一步**：如果想要在当前终端中看到Electron的render.js中的log
 
@@ -141,7 +141,7 @@ true
 
 然后就也能看到`render.js`中的log了：
 
-![devtools_see_render_js_log](../../../assets/img/devtools_see_render_js_log.png)
+![devtools_see_render_js_log](../../assets/img/devtools_see_render_js_log.png)
 
 相关说明：
 
@@ -150,4 +150,4 @@ true
     * -》`main.js`中`console.log`输出到的地方
 * `renderer.js` -> 显示界面的渲染线程 = Electron界面所在的线程
     * -》（调试时）Electron界面开启了`DevTools`后右边就能看到`console.log`输出的内容了
-      * ![see_log_after_toggle_devtools](../../../assets/img/see_log_after_toggle_devtools.png)
+      * ![see_log_after_toggle_devtools](../../assets/img/see_log_after_toggle_devtools.png)

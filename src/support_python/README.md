@@ -55,7 +55,7 @@ git clone https://github.com/fyears/electron-python-example.git
 
 用VSCode打开，效果是：
 
-![electron_python_example_code](../../assets/img/electron_python_example_code.png)
+![electron_python_example_code](../assets/img/electron_python_example_code.png)
 
 ### 初始化node环境
 
@@ -185,7 +185,7 @@ rm -f package-lock.json
 
 界面效果：
 
-![electron_python_launch_ui](../../assets/img/electron_python_launch_ui.png)
+![electron_python_launch_ui](../assets/img/electron_python_launch_ui.png)
 
 ### 测试zerorpc通信
 
@@ -219,7 +219,7 @@ connecting to "tcp://localhost:4242"
 2.0
 ```
 
-![electron_python_zerorpc_working](../../assets/img/electron_python_zerorpc_working.png)
+![electron_python_zerorpc_working](../assets/img/electron_python_zerorpc_working.png)
 
 即表示`zerorpc`通信正常，`js`可以和`Python`代码交互了。
 
@@ -231,7 +231,7 @@ connecting to "tcp://localhost:4242"
 
 即可看到计算器的界面：
 
-![electron_python_hello_caculator](../../assets/img/electron_python_hello_caculator.png)
+![electron_python_hello_caculator](../assets/img/electron_python_hello_caculator.png)
 
 至此即在mac中跑通此处的`electron-python-example`了。
 

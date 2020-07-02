@@ -116,4 +116,4 @@ startElement.addEventListener('click', () => {
 
 效果：
 
-![html_textarea_show_js_output](../../../assets/img/html_textarea_show_js_output.png)
+![html_textarea_show_js_output](../../assets/img/html_textarea_show_js_output.png)
