@@ -60,7 +60,7 @@ contextMenu({
             visible: params.mediaType === 'image'
         },
         {
-            label: 'Search Google for “{selection}”',
+            label: 'Search Google for "{selection}"',
             // Only show it when right-clicking text
             visible: params.selectionText.trim().length > 0,
             click: () => {
